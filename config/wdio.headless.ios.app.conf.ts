@@ -3,26 +3,16 @@ import { config as baseConfig } from "./wdio.shared.local.appium.conf.js";
 import path from "path";
 import url from "node:url";
 
-const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
-// We need to remove the `mochaOpts` from the `baseConfig` to have all
-// Mocha references removed
-const { mochaOpts, ...cleanBaseConfig } = baseConfig;
+const isGhActions = process.env.GITHUB_ACTION;
 
 export const config: WebdriverIO.Config = {
-    ...cleanBaseConfig,
+    ...baseConfig,
 
     // ============
     // Specs
     // ============
     specs: ["../tests/features/**/*.feature"],
-    // ============
-    // Framework
-    // ============
-    // By default we use the Mocha framework, see the `wdio.shared.conf.ts` which is imported by `./wdio.shared.local.appium.conf.js`. For Cucumber we need to "redefine" the framework
     framework: "cucumber",
-    //
-    // You also need to specify where your step definitions are located.
-    // See also: https://github.com/webdriverio/webdriverio/tree/main/packages/wdio-cucumber-framework#cucumberopts-options
     cucumberOpts : {
         require: [
            path.join(
@@ -67,8 +57,7 @@ export const config: WebdriverIO.Config = {
                 "steps",
                 "webview_steps.ts",
             ),
-
-        ], // <string[]> (file/dir) require files before executing features
+            ], // <string[]> (file/dir) require files before executing features
         backtrace: false, // <boolean> show full backtrace for errors
         compiler: [], // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
         dryRun: false, // <boolean> invoke formatters without executing steps
@@ -80,41 +69,39 @@ export const config: WebdriverIO.Config = {
         ignoreUndefinedDefinitions: false, // <boolean> Enable this config to treat undefined definitions as warnings.
         scenarioLevelReporter: false, // Enable this to make webdriver.io behave as if scenarios and not steps were the tests.
     },
+    
     // ============
     // Capabilities
     // ============
     // For all capabilities please check
-    // https://github.com/appium/appium-uiautomator2-driver
+    // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
     capabilities: [
         {
             // The defaults you need to have in your config
-            platformName: "Android",
+            platformName: "iOS",
             "wdio:maxInstances": 1,
             // For W3C the appium capabilities need to have an extension prefix
             // This is `appium:` for all Appium Capabilities which can be found here
+            // http://appium.io/docs/en/writing-running-appium/caps/
 
             //
-            // NOTE: Change this name according to the Emulator you have created on your local machine
-            "appium:deviceName": "Medium Phone API 36.1",
+            // NOTE: Change this name according to the Simulator you have created on your local machine
+            "appium:deviceName": "iPhone 16 Pro",
             //
-            // NOTE: Change this version according to the Emulator you have created on your local machine
-            "appium:platformVersion": "16.0",
+            // NOTE: Change this version according to the Simulator Version you have created on your local machine
+            "appium:platformVersion": "18.5",
             "appium:orientation": "PORTRAIT",
-            "appium:automationName": "UiAutomator2",
+            "appium:automationName": "XCUITest",
             // The path to the app
             "appium:app": join(
                 process.cwd(),
                 "apps",
-                //
-                // NOTE: Change this name according to the app version you downloaded
-                "android.wdio.native.app.v1.0.8.apk"
+                // Change this name according to the app version you downloaded
+                "ios.simulator.wdio.native.app.v1.0.8.zip"
             ),
-            "appium:appWaitActivity": "com.wdiodemoapp.MainActivity",
             "appium:newCommandTimeout": 240,
-            browserName: 'chrome',
-                'goog:chromeOptions': {
-                args: ['--headless', '--disable-gpu'] // Enable headless mode
-            }
+            // This is needed to wait for the webview context to become available
+            "appium:webviewConnectTimeout": 5000,
         },
     ],
     reporters: [['allure', {
