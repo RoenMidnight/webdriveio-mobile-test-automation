@@ -30,7 +30,7 @@ jobs:
         run: npm install
 
       - name: Run Android tests on BrowserStack
-        run: npx wdio run ./config/wdio.browserstack.conf.ts
+        run: npx wdio run ./config/wdio.browserstack.conf.ts 
 
       - name: Generate Allure Report
         if: always()
