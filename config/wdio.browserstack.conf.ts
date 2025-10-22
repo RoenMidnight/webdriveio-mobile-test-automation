@@ -82,12 +82,11 @@ export const config = {
   capabilities: [
         {
           platformName: 'Android',
-          'appium:deviceName': 'Google Pixel 7',
-          'appium:platformVersion': '13.0',
-          'appium:automationName': 'UiAutomator2',
-          'appium:platformName': 'android',
-          'appium:app': 'bs://9211db2ff9fde9928b068a61e21c636d2338e3c5',
-          'appium:autoGrantPermissions': true
+          deviceName: 'Google Pixel 7',
+          platformVersion: '13.0',
+          automationName: 'UiAutomator2',
+          app: 'bs://9211db2ff9fde9928b068a61e21c636d2338e3c5',
+          autoGrantPermissions: true
         }
   ]
 };
