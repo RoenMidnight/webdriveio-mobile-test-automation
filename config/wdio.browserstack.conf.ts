@@ -6,8 +6,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootPath = path.resolve(__dirname, '..');
 
-const isIOS = process.env.PLATFORM === 'ios';
-
 export const config = {
   runner: 'local',
   maxInstances: 1,
@@ -82,16 +80,7 @@ export const config = {
   hostname: 'hub.browserstack.com',
 
   capabilities: [
-    isIOS
-      ? {
-          platformName: 'iOS',
-          'appium:deviceName': 'iPhone 14',
-          'appium:platformVersion': '17.5',
-          'appium:automationName': 'XCUITest',
-          'appium:app': process.env.BROWSERSTACK_APP_ID || 'bs://<ios-app-id>',
-          'appium:autoAcceptAlerts': true
-        }
-      : {
+        {
           platformName: 'Android',
           'appium:deviceName': 'Google Pixel 7',
           'appium:platformVersion': '13.0',
