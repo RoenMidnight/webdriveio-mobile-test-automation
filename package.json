@@ -1,5 +1,5 @@
 {
-    "name": "appium-boilerplate",
+    "name": "webdriverio-mobile-test-automation",
     "version": "5.3.1",
     "author": "Wim Selles <wim@wswebcreation.nl>",
     "license": "MIT",
@@ -28,6 +28,7 @@
     "scripts": {
         "android.browserstack.app": "wdio run ./config/browserstack/wdio.android.bs.app.conf.ts",
         "android.app.cucumber": "wdio run config/wdio.android.app.cucumber.conf.ts",
+        "android.app.cucumber:feature": "wdio run config/wdio.android.app.cucumber.conf.ts --spec",
         "android.app.headless.cucumber": "wdio run config/wdio.headless.android.app.cucumber.conf.ts",
         "android.browser": "wdio run config/wdio.android.browser.conf.ts",
         "browser": "wdio run config/wdio.browser.conf.ts",
@@ -41,7 +42,8 @@
         "lint": "eslint config tests",
         "appium:inspector": "bash scripts/start-appium-inspector.sh",
         "appium:inspector:win": "scripts\\start-appium-inspector.bat",
-        "report": "allure generate allure-results"
+        "report": "allure generate allure-results",
+        "report:open": "allure open"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^8.45.0",

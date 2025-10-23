@@ -111,10 +111,6 @@ export const config: WebdriverIO.Config = {
             ),
             "appium:appWaitActivity": "com.wdiodemoapp.MainActivity",
             "appium:newCommandTimeout": 240,
-            browserName: 'chrome',
-                'goog:chromeOptions': {
-                args: ['--headless', '--disable-gpu'] // Enable headless mode
-            }
         },
     ],
     reporters: [['allure', {
